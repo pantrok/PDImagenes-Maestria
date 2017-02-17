@@ -19,29 +19,38 @@ public class Histograma {
     private double green[];
     private double blue[];
     private double cumulative[];
-    //TODO: Declarar arreglos nuevos para visualizar 
     private final int tamanoImagen;
+    private boolean normalizado;
 
     public Histograma(BufferedImage imagen) {
         this.imagen = imagen;
         tamanoImagen = this.imagen.getHeight() * this.imagen.getWidth();
         obtenerHistograma();
         cumulative = new double[256];
+        normalizado = true;
+    }
+
+    public Histograma(BufferedImage imagen, boolean normalizado) {
+        this.imagen = imagen;
+        tamanoImagen = this.imagen.getHeight() * this.imagen.getWidth();
+        obtenerHistograma();
+        cumulative = new double[256];
+        this.normalizado = normalizado;
     }
 
     //Tener los arreglos de valores para cada canal
     private void obtenerHistograma() {
-        
+
         red = new double[256];
         green = new double[256];
         blue = new double[256];
-        
+
         for (int i = 0; i < 256; i++) {
             red[i] = 0;
             green[i] = 0;
             blue[i] = 0;
         }
-        
+
         for (int x = 0; x < imagen.getWidth(); x++) {
             for (int y = 0; y < imagen.getHeight(); y++) {
                 Color color = new Color(imagen.getRGB(x, y));
@@ -50,24 +59,60 @@ public class Histograma {
                 blue[color.getBlue()]++;
             }
         }
-        
-        //Se normaliza el histograma
-        for (int i = 0; i < 256; i++) {
-            red[i] = red[i] / tamanoImagen;
-            green[i] = green[i] / tamanoImagen;
-            blue[i] = blue[i] / tamanoImagen;
+
+        if (normalizado) {
+            //Se normaliza el histograma
+            for (int i = 0; i < 256; i++) {
+                red[i] = red[i] / tamanoImagen;
+                green[i] = green[i] / tamanoImagen;
+                blue[i] = blue[i] / tamanoImagen;
+            }
         }
 
     }
-    
+
+    public void obtenerHistogramaExcluyendo(int colorRGBExcluir) {
+
+        red = new double[256];
+        green = new double[256];
+        blue = new double[256];
+
+        for (int i = 0; i < 256; i++) {
+            red[i] = 0;
+            green[i] = 0;
+            blue[i] = 0;
+        }
+
+        for (int x = 0; x < imagen.getWidth(); x++) {
+            for (int y = 0; y < imagen.getHeight(); y++) {
+                if (imagen.getRGB(x, y) != colorRGBExcluir) {
+                    Color color = new Color(imagen.getRGB(x, y));
+                    red[color.getRed()]++;
+                    green[color.getGreen()]++;
+                    blue[color.getBlue()]++;
+                }
+            }
+        }
+
+        if (normalizado) {
+            //Se normaliza el histograma
+            for (int i = 0; i < 256; i++) {
+                red[i] = red[i] / tamanoImagen;
+                green[i] = green[i] / tamanoImagen;
+                blue[i] = blue[i] / tamanoImagen;
+            }
+        }
+
+    }
+
     public double[] obtenerHistogramaAcumulativoGrises(int i) {
-        
+
         //Se calcula acumulativo
         if (i == 0) {
             cumulative[0] = red[0];
             return cumulative;
         } else {
-            cumulative[i] = obtenerHistogramaAcumulativoGrises(i-1)[i-1] + red[i];
+            cumulative[i] = obtenerHistogramaAcumulativoGrises(i - 1)[i - 1] + red[i];
             return cumulative;
         }
 
@@ -84,5 +129,5 @@ public class Histograma {
     public double[] getBlue() {
         return blue;
     }
-    
+
 }
