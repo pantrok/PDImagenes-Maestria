@@ -19,6 +19,7 @@ import pdimagenes.parciales.PrimerParcial;
 public class PrimerParcialFrame extends javax.swing.JFrame {
 
     private BufferedImage imagen;
+    private BufferedImage imagenOriginal;
     private PrimerParcial primerParcial;
     
     /**
@@ -26,6 +27,7 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
      */
     public PrimerParcialFrame(BufferedImage imagen) {
         initComponents();
+        this.imagenOriginal = imagen;
         this.imagen = imagen;
         init();
     }
@@ -52,6 +54,8 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Primer Parcial");
@@ -78,6 +82,22 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, -1, -1));
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 310, 280));
 
+        jButton3.setText("Tercera Etapa");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, -1, -1));
+
+        jButton4.setText("Cuarta Etapa");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 400, 100, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -99,10 +119,34 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
         jLabel1.setIcon(new ImageIcon(imagen.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        imagen = primerParcial.terceraEtapa(imagen, imagenOriginal);
+        HistogramaVisual visual = new HistogramaVisual(imagen);
+        jPanel1.removeAll();
+        jPanel1.revalidate();
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(visual.getHistograma(primerParcial.getUltimoHistograma().getRed(), Color.RED, "RED"), BorderLayout.CENTER);
+        jPanel1.repaint();
+        jLabel1.setIcon(new ImageIcon(imagen.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        imagen = primerParcial.cuartaEtapa(imagen);
+        HistogramaVisual visual = new HistogramaVisual(imagen);
+        jPanel1.removeAll();
+        jPanel1.revalidate();
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(visual.getHistograma(primerParcial.getUltimoHistograma().getRed(), Color.RED, "RED"), BorderLayout.CENTER);
+        jPanel1.repaint();
+        jLabel1.setIcon(new ImageIcon(imagen.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
