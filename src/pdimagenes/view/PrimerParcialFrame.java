@@ -8,7 +8,13 @@ package pdimagenes.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import pdimagenes.enums.Canal;
 import pdimagenes.parciales.PrimerParcial;
 
@@ -20,6 +26,7 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
 
     private BufferedImage imagen;
     private BufferedImage imagenOriginal;
+    private BufferedImage imagenManual;
     private PrimerParcial primerParcial;
     
     /**
@@ -49,6 +56,7 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -56,9 +64,24 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Primer Parcial");
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setViewportView(jLabel1);
@@ -71,7 +94,7 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, -1, -1));
 
         jButton2.setText("Segunda Etapa");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -79,8 +102,8 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, -1, -1));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 310, 280));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 260, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 310, 210));
 
         jButton3.setText("Tercera Etapa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +111,7 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 290, -1, -1));
 
         jButton4.setText("Cuarta Etapa");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +119,51 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 400, 100, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 290, 100, -1));
+
+        jButton5.setText("Abrir imagen");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 250, -1, -1));
+
+        jScrollPane2.setViewportView(jLabel2);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, 280, 220));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Matriz de Confusión"));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setText("Roi");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
+
+        jLabel4.setText("No Roi");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        jLabel5.setText("Positivos");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+
+        jLabel6.setText("Negativos");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 310, 270, 180));
+
+        jTextField1.setEnabled(false);
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 250, 160, 30));
+
+        jButton6.setText("Comparar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 280, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -141,14 +208,78 @@ public class PrimerParcialFrame extends javax.swing.JFrame {
         jLabel1.setIcon(new ImageIcon(imagen.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("IMAGE FILES (*.bmp, *.gif, *.jpg, *.jpeg, *.png)", "bmp", "gif", "jpg", "jpeg","png");
+        jFileChooser1.setFileFilter(filter);
+        int returnVal = jFileChooser1.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser1.getSelectedFile();
+            jTextField1.setText(file.getName());
+            try {
+                imagenManual = ImageIO.read(file);
+                jLabel2.setIcon(new ImageIcon(imagenManual.getScaledInstance(jScrollPane2.getWidth(), jScrollPane2.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        //Comparar ambas imagenes
+        double totalRoiManual = 0.0, totalNoRoiManual = 00.0;
+        int totalRoiPositivos = 0, totalRoiNegativos = 0;
+        int totalNoRoiPositivos = 0, totalNoRoiNegativos = 0;
+        for (int x = 0; x < imagenManual.getWidth(); x++) {
+            for (int y = 0; y < imagenManual.getHeight(); y++) {
+                if (imagenManual.getRGB(x, y) == Color.RED.getRGB()) {
+                    if (imagen.getRGB(x, y) == Color.RED.getRGB()) {
+                        totalNoRoiPositivos++;
+                    } else {
+                        totalNoRoiNegativos++;
+                    }
+                    totalNoRoiManual++;
+                } else {
+                    if (imagen.getRGB(x, y) == Color.RED.getRGB()) {
+                        totalRoiNegativos++;
+                    } else {
+                        totalRoiPositivos++;
+                    }
+                    totalRoiManual++;
+                }
+            }
+        }
+        DecimalFormat myFormatter = new DecimalFormat("###.##");
+        jLabel7.setText(myFormatter.format((100*(totalRoiPositivos/totalRoiManual)))+"%");
+        jLabel8.setText(myFormatter.format((100*(totalRoiNegativos/totalRoiManual)))+"%");
+        jLabel9.setText(myFormatter.format((100*(totalNoRoiPositivos/totalNoRoiManual)))+"%");
+        jLabel10.setText(myFormatter.format((100*(totalNoRoiNegativos/totalNoRoiManual)))+"%");
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

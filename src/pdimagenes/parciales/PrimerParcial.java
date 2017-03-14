@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import pdimagenes.herramientas.FiltrosRegionales;
 import pdimagenes.herramientas.Histograma;
@@ -175,149 +174,6 @@ public class PrimerParcial {
                 Color color = new Color(imagen.getRGB(x, i));
                 double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
                 if (promVecino > colorRGB) {
-                    cumpleCriterio = false;
-                    break;
-                }
-            }
-
-            if (cumpleCriterio) {
-                //System.out.println("Sexto caso");
-                return true;
-            }
-
-        }
-
-        return false;
-
-    }
-
-    private boolean vecinosSimilaresMayor(BufferedImage imagen, int x, int y, int tamanoMuestra, int colorRGB) {
-        //Muestra de 10 pixeles, checar hacia la derecha, abajo, izquierda y arriba
-        int muestraDerecha = imagen.getWidth() - x < tamanoMuestra ? imagen.getWidth() - x : tamanoMuestra;
-        int muestraIzquierda = x <= (tamanoMuestra - 1) ? x : tamanoMuestra;
-        int muestraAbajo = imagen.getHeight() - y < tamanoMuestra ? imagen.getHeight() - y : tamanoMuestra;
-        int muestraArriba = y <= (tamanoMuestra - 1) ? y : tamanoMuestra;
-
-        //Checamos que cumpla regla de muestras hacia la derecha y abajo o hacia la izquierda y arriba
-        //o dos muestras hacia la derecha o izquierda
-        //Primer caso
-        boolean cumpleCriterio = true;
-        for (int i = x; i < (x + muestraDerecha); i++) {
-            Color color = new Color(imagen.getRGB(i, y));
-            double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-            //System.out.println(i + " " + y + " " + promVecino);
-            if (promVecino < colorRGB) {
-                cumpleCriterio = false;
-                break;
-            }
-        }
-
-        for (int i = y; i < (y + muestraAbajo); i++) {
-            Color color = new Color(imagen.getRGB(x, i));
-            double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-            //System.out.println(x + " " + i + " " + promVecino);
-            if (promVecino < colorRGB) {
-                cumpleCriterio = false;
-                break;
-            }
-        }
-
-        if (cumpleCriterio) {
-            //System.out.println("Primer caso");
-            return true;
-        }
-
-        //Segundo caso
-        cumpleCriterio = true;
-        for (int i = x; i >= (x - muestraIzquierda); i--) {
-            Color color = new Color(imagen.getRGB(i, y));
-            double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-            if (promVecino < colorRGB) {
-                cumpleCriterio = false;
-                break;
-            }
-        }
-
-        for (int i = y; i >= (y - muestraArriba); i--) {
-            Color color = new Color(imagen.getRGB(x, i));
-            double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-            if (promVecino < colorRGB) {
-                cumpleCriterio = false;
-                break;
-            }
-        }
-
-        if (cumpleCriterio) {
-            //System.out.println("Segundo caso");
-            return true;
-        }
-
-        //Tercer caso
-        if ((imagen.getWidth() - x) >= (tamanoMuestra * 2)) {
-            cumpleCriterio = true;
-            muestraDerecha = tamanoMuestra * 2;
-            for (int i = x; i < (x + muestraDerecha); i++) {
-                Color color = new Color(imagen.getRGB(i, y));
-                double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-                if (promVecino < colorRGB) {
-                    cumpleCriterio = false;
-                    break;
-                }
-            }
-            if (cumpleCriterio) {
-                //System.out.println("Tercer caso");
-                return true;
-            }
-
-        }
-
-        //Cuarto caso
-        if (x >= (tamanoMuestra * 2)) {
-            cumpleCriterio = true;
-            muestraIzquierda = tamanoMuestra * 2;
-            for (int i = x; i >= (x - muestraIzquierda); i--) {
-                Color color = new Color(imagen.getRGB(i, y));
-                double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-                if (promVecino < colorRGB) {
-                    cumpleCriterio = false;
-                    break;
-                }
-            }
-
-            if (cumpleCriterio) {
-                //System.out.println("Cuarto caso");
-                return true;
-            }
-
-        }
-
-        //Quinto caso
-        if ((imagen.getHeight() - y) >= (tamanoMuestra * 2)) {
-            cumpleCriterio = true;
-            muestraAbajo = tamanoMuestra * 2;
-            for (int i = y; i < (y + muestraAbajo); i++) {
-                Color color = new Color(imagen.getRGB(x, i));
-                double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-                if (promVecino < colorRGB) {
-                    cumpleCriterio = false;
-                    break;
-                }
-            }
-            if (cumpleCriterio) {
-                //System.out.println("Quinto caso");
-                return true;
-            }
-
-        }
-
-        //Sexto caso
-        if (y >= (tamanoMuestra * 2)) {
-            cumpleCriterio = true;
-            muestraArriba = tamanoMuestra * 2;
-            for (int i = y; i >= (y - muestraArriba); i--) {
-                Color color = new Color(imagen.getRGB(x, i));
-                double promVecino = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-                if (promVecino < colorRGB) {
                     cumpleCriterio = false;
                     break;
                 }
@@ -514,10 +370,10 @@ public class PrimerParcial {
                     imagenModificada.setRGB(x, y, Color.RED.getRGB());
                 } /*else if (radioPunto <= radioMax2 && radioPunto >= radioMax1 && media > 50) {
                     imagenModificada.setRGB(x, y, Color.RED.getRGB());
-                }*/ else if (radioPunto <= radioMax2 && radioPunto >= radioMax1 && media > umbralIris /*&& vecinosSimilares(imagen, x, y, 100, (int)media)*/) {
+                }*/ /*else if (radioPunto <= radioMax2 && radioPunto >= radioMax1 && media > umbralIris) {
                     imagenModificada.setRGB(x, y, Color.RED.getRGB());
 
-                }
+                }*/
             }
         }
         return imagenModificada;
@@ -541,7 +397,7 @@ public class PrimerParcial {
     public BufferedImage segundaEtapa(BufferedImage imagen) {
 
         BufferedImage imagenSegundaEtapa;
-        imagenSegundaEtapa = new OperacionPunto().correccionGamaExcluyendo(imagen, 2.5, Color.RED.getRGB());
+        /*imagenSegundaEtapa = new OperacionPunto().correccionGamaExcluyendo(imagen, 2.5, Color.RED.getRGB());
         ultimoHistograma = new Histograma(imagenSegundaEtapa);
         ultimoHistograma.obtenerHistogramaExcluyendo(Color.RED.getRGB());
         imagenSegundaEtapa = new OperacionPunto().contrasteAutomaticoMejorado(imagenSegundaEtapa, ultimoHistograma, 0, 255);
@@ -553,7 +409,25 @@ public class PrimerParcial {
         //Regresar los pixeles que no sean rojos a su color original
         imagenSegundaEtapa = coloresOriginales(imagen, imagenSegundaEtapa);
         ultimoHistograma = new Histograma(imagenSegundaEtapa);
+        ultimoHistograma.obtenerHistogramaExcluyendo(Color.RED.getRGB());*/
+        
+        
+        //////////////////////////////////////////////////////
+        //Aplicar suavizado
+        imagenSegundaEtapa = new FiltrosRegionales().medianaExcluyendo(imagen, Color.RED.getRGB());
+        ultimoHistograma = new Histograma(imagenSegundaEtapa);
         ultimoHistograma.obtenerHistogramaExcluyendo(Color.RED.getRGB());
+        //Aplicar ajuste de contraste
+        imagenSegundaEtapa = new OperacionPunto().contrasteAutomaticoMejorado(imagenSegundaEtapa, ultimoHistograma, 0, 255);
+        encontrarRadioIris(imagenSegundaEtapa);
+        imagenSegundaEtapa = colorearTodoMenosIris(imagenSegundaEtapa);
+        //Aplicar bordes
+        imagenSegundaEtapa = new FiltrosRegionales().cannyGrises(imagenSegundaEtapa);
+        //imagenSegundaEtapa = new FiltrosRegionales().mediana(imagenSegundaEtapa);
+        //Aplicar binarizacion
+        ultimoHistograma = new Histograma(imagenSegundaEtapa);
+        ultimoHistograma.obtenerHistogramaExcluyendo(Color.RED.getRGB());
+        
         return imagenSegundaEtapa;
     }
 

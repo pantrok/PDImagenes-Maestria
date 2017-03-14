@@ -95,7 +95,7 @@ public class OperacionesPuntoFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(640, 293, 314, 27);
+        jComboBox1.setBounds(640, 293, 314, 20);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(0, 295));
         jPanel1.setMinimumSize(new java.awt.Dimension(0, 295));
